@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ParseJSON {
     private String json;
-    public static List<Student> studentList = new ArrayList<Student>();
+    public static List<Student> studentList;
     private JSONArray jsonArray = null;
 
     public ParseJSON(String json) {
@@ -21,6 +21,7 @@ public class ParseJSON {
     }
 
     protected void jsonParser() {
+        studentList = new ArrayList<>();
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(json);

@@ -3,6 +3,8 @@ package org.careerop.jsonparsingtest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,9 +35,14 @@ public class Display extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
-        studentList = new ArrayList<Student>();
-
         listView = (ListView) findViewById(R.id.listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(Display.this, ""+studentList.get(position).getId().toString()+"\n"+studentList.get(position).getName().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         StringRequest stringRequest = new StringRequest(Config.SHOW_URL,
                 new Response.Listener<String>() {
@@ -58,6 +65,7 @@ public class Display extends AppCompatActivity {
     private void showJSON(String json) {
         ParseJSON pj = new ParseJSON(json);
         pj.jsonParser();
+        studentList = ParseJSON.studentList;
         adapter = new StudentAdapter(Display.this, ParseJSON.studentList);
         listView.setAdapter(adapter);
     }
